@@ -3,7 +3,8 @@
 (* 
 Author: Celestine P. Lawrence
 Date: 22/02/21
-Runtime: ~8 mins using Wolfram Mathematica 12.2 on a HP Slim Desktop S01-pF1000nd 
+Runtime: ~8 mins using Wolfram Mathematica 12.2 on a HP Slim Desktop S01-pF1000nd
+Result: https://youtu.be/k12zioVQwwk , on combining the .mp3 and .avi with Windows video editor
 *)	
 
 
