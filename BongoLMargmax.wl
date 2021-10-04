@@ -40,10 +40,6 @@ audioLM=Sound[
 sound/@dat[[;;,1]]]
 
 
-(* ::InheritFromParent:: *)
-(**)
-
-
 (*Generate video*)
 Rscape=N@ParallelTable[{U[x],0.,S[x,a]} ,{x,1/2/t,1,1/t},{a,3+1/4/t,4,1/2/t}];(* Obtain a visually interpretable reward-scape by shading uncertainty (in red) and surprise (in blue) across the entire state-parameter space *)
 pics = Table[ {x,a}=dat[[n]]; (*iterate over state-parameter points to generate a sequence of images*)
