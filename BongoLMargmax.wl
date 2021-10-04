@@ -9,7 +9,7 @@ Result: Uploaded on https://youtu.be/FrumXDKqHhY
 
 
 (*Mathematical definitions*)
-LM[\[Xi]_,\[Alpha]_]:=\[Alpha]*\[Xi](1-\[Xi]); (*Logistic map. Oscillatory behavior is observed for 3<\[Alpha]<4,
+LM[x_,a_]:=a*x(1-x); (*Logistic map. Oscillatory behavior is observed for 3<a<4,
 where a period doubling bifurcation results in an onset of chaos at a\[TildeTilde]3.57 that ultimately ends in a trifurcation at a\[TildeTilde]3.83, 
 with each branch repeating the period doubling route to chaos and its end by trifurcation,
 at recursively smaller scales until a=4*)
