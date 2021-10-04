@@ -25,13 +25,13 @@ CL[x_]:=NArgMax[{R[x,aa],3<=aa<=4},aa,Method->{"DifferentialEvolution"}];(*Contr
 
 (*Generate bitstream from a controlled evolution of the logistic map*)
 t=1000; (*number of beats*)
-x = 0.5; a = 3.5;(*initial conditions*)
+x = 0.5; a = 3.5;(*initial conditions of our discrete dynamical system where x is a main-variable and a is a step-mechanism *)
 Dynamic@n
-dat=Table[x=LM[x,a]; a=CL[x] ;{x,a},{n,t}]; (*iteratively update state and parameter space*)
+dat=Table[x=LM[x,a]; a=CL[x] ;{x,a},{n,t}]; (*iteratively update the system*)
 
 (*Plot results*)
-{ListPlot@dat[[;;,1]] (*state-space evolution seems to be between order and disorder*),
-ListPlot@dat[[;;,2]] (*parameter-space evolution is not a uniform distribution - thus the estimation of P[x] is inaccurate - needs revision in future work!*),
+{ListPlot@dat[[;;,1]] (*main-variable evolution seems to be between order and disorder*),
+ListPlot@dat[[;;,2]] (*step-mechanism evolution is not a uniform distribution - thus the estimation of P[x] is inaccurate - needs revision in future work!*),
 ListPlot[ Table[ {x,a}=xa;{U[x],S[x,a]},{xa,dat}] , PlotRange->Full] (*state-space evolution seems to be preferentially near the U=1 S=0 or U=0 S=1 region*)}
 
 (*Generate audio*)
@@ -41,14 +41,11 @@ sound/@dat[[;;,1]]]
 
 
 (*Generate video*)
-Rscape=N@ParallelTable[{U[x],0.,S[x,a]} ,{x,1/2/t,1,1/t},{a,3+1/4/t,4,1/2/t}];(* Obtain a visually interpretable reward-scape by shading uncertainty (in red) and surprise (in blue) across the entire state-parameter space *)
-pics = Table[ {x,a}=dat[[n]]; (*iterate over state-parameter points to generate a sequence of images*)
-Rscape[[Ceiling[ x*t],Clip[Round[(a-3)*2*t],{1,2*t}],2]]=1.; (* add a full shade of green to the current state-parameter point*) 
+Rscape=N@ParallelTable[{U[x],0.,S[x,a]} ,{x,1/2/t,1,1/t},{a,3+1/4/t,4,1/2/t}];(* Obtain a visually interpretable reward-scape by shading uncertainty (in red) and surprise (in blue) across the entire state space *)
+pics = Table[ {x,a}=dat[[n]]; (*iterate over the states to generate a sequence of images*)
+Rscape[[Ceiling[ x*t],Clip[Round[(a-3)*2*t],{1,2*t}],2]]=1.; (*add a full shade of green to the current state*) 
 {i,j}=Sort@Ceiling[{x,LM[x,a]}*t]; Cspace= Floor[255*Rscape]; 
-Cspace[[i;;j,Clip[Round[(a-3)*2*t],{1,2*t}],2]]=ConstantArray[100,j-i+1]; (*add a partial shade of green to the line joining the current state to the next state at the current parameter*)
+Cspace[[i;;j,Clip[Round[(a-3)*2*t],{1,2*t}],2]]=ConstantArray[100,j-i+1]; (*add a partial shade of green to the line joining the current value to the next value of x at the current value of a*)
 Image[Cspace,"Byte"] ,{n,t}];
 VideoCombine[{SlideShowVideo[pics->0.1],audioLM}]
-Export["LMargmax.mp4",%]
-
-
-
+Export["LMargmaxDE.mp4",%]
